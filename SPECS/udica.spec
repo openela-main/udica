@@ -1,9 +1,8 @@
 Summary: A tool for generating SELinux security policies for containers
 Name: udica
-Version: 0.2.6
-Release: 30%{?dist}
+Version: 0.2.8
+Release: 1%{?dist}
 Source0: https://github.com/containers/udica/archive/v%{version}.tar.gz
-Patch0: 0001-Make-sure-each-section-of-the-inspect-exists-before-.patch
 License: GPLv3+
 BuildArch: noarch
 Url: https://github.com/containers/udica
@@ -59,6 +58,15 @@ install -m 0644 udica/man/man8/udica.8 %{buildroot}%{_mandir}/man8/udica.8
 %endif
 
 %changelog
+* Thu Nov 30 2023 Vit Mojzis <vmojzis@redhat.com> - 0.2.8-1
+- Improve code readability based on lint and black findings
+- Fix generating policy for Crio mounts
+- Add --devices option
+- v0.2.7 release changes:
+- Improve label collection for mounts and devices (RHEL-16245)
+- Add support for containerd via "nerdctl inspect"
+- Avoid duplicate rules for accessing mounts and devices
+
 * Fri Jan 27 2023 Vit Mojzis <vmojzis@redhat.com> - 0.2.6-30
 - Bump release to preserve upgrade path (#2160401)
 
