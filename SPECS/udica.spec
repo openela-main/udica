@@ -1,7 +1,7 @@
 Summary: A tool for generating SELinux security policies for containers
 Name: udica
 Version: 0.2.6
-Release: 20%{?dist}
+Release: 21%{?dist}
 Source0: https://github.com/containers/udica/archive/v%{version}.tar.gz
 Patch0: 0001-Make-sure-each-section-of-the-inspect-exists-before-.patch
 License: GPLv3+
@@ -59,6 +59,10 @@ install -m 0644 udica/man/man8/udica.8 %{buildroot}%{_mandir}/man8/udica.8
 %endif
 
 %changelog
+* Fri Apr 12 2024 Lokesh Mandvekar <lsm5@redhat.com> - 0.2.6-21
+- bump release to preserve update path
+- Resolves: RHEL-32671
+
 * Thu Jan 12 2023 Jindrich Novy <jnovy@redhat.com> - 0.2.6-20
 - bump release to preserve update path
 - Related: #2139052
