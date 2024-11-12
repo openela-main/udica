@@ -1,8 +1,13 @@
 Summary: A tool for generating SELinux security policies for containers
 Name: udica
 Version: 0.2.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 Source0: https://github.com/containers/udica/archive/v%{version}.tar.gz
+#git format-patch -N v0.2.8 -- . ':!.cirrus.yml' ':!.github'
+Patch0001: 0001-Add-option-to-generate-custom-policy-for-a-confined-.patch
+Patch0002: 0002-Add-tests-covering-confined-user-policy-generation.patch
+Patch0003: 0003-confined-make-l-non-optional.patch
+Patch0004: 0004-confined-allow-asynchronous-I-O-operations.patch
 License: GPLv3+
 BuildArch: noarch
 Url: https://github.com/containers/udica
@@ -37,6 +42,7 @@ inspection of container JSON file.
 %{__python2} setup.py install --single-version-externally-managed --root=%{buildroot}
 %endif
 
+install --directory %{buildroot}%{_datadir}/udica/macros
 install --directory %{buildroot}%{_mandir}/man8
 install -m 0644 udica/man/man8/udica.8 %{buildroot}%{_mandir}/man8/udica.8
 
@@ -45,7 +51,9 @@ install -m 0644 udica/man/man8/udica.8 %{buildroot}%{_mandir}/man8/udica.8
 %{_bindir}/udica
 %dir %{_datadir}/udica
 %dir %{_datadir}/udica/ansible
+%dir %{_datadir}/udica/macros
 %{_datadir}/udica/ansible/*
+%{_datadir}/udica/macros/*
 
 %if 0%{?fedora} || 0%{?rhel} > 7
 %license LICENSE
@@ -58,6 +66,12 @@ install -m 0644 udica/man/man8/udica.8 %{buildroot}%{_mandir}/man8/udica.8
 %endif
 
 %changelog
+* Tue Mar 05 2024 Vit Mojzis <vmojzis@redhat.com> - 0.2.8-2
+- Add option to generate custom policy for a confined user (RHEL-28166)
+- Add tests covering confined user policy generation
+- confined: make "-l" non optional
+- confined: allow asynchronous I/O operations
+
 * Thu Nov 30 2023 Vit Mojzis <vmojzis@redhat.com> - 0.2.8-1
 - Improve code readability based on lint and black findings
 - Fix generating policy for Crio mounts
